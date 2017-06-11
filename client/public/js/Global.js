@@ -12,9 +12,9 @@ const ValidateSignUp = (payload) =>  {
             errors.email = 'Please provide a correct email address.';
         }
 
-        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
+        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 6) {
             isFormValid = false;
-            errors.password = 'Password must have at least 8 characters.';
+            errors.password = 'Password must have at least 6 characters.';
         }
 
         if(!payload || typeof payload.confirmPassword !== 'string' || payload.confirmPassword !== payload.password){

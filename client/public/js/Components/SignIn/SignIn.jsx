@@ -28,7 +28,8 @@ class SignIn extends React.Component {
     }
 
 
-    authenticate() {
+    authenticate(event) {
+        event.preventDefault();
 
         ValidateSignIn(this.state.user)
             .then(
@@ -74,8 +75,7 @@ class SignIn extends React.Component {
             );
     }
 
-    changeUser(event){
-
+    changeUser(){
         this.setState({snack: {visible: false, message: ''}});
 
         const field = event.target.name;
@@ -93,6 +93,7 @@ class SignIn extends React.Component {
 
         return (
             <Card className="container">
+                <form action="/" onSubmit={this.authenticate}>
                 <h2 className="card-heading">Sign In</h2>
                 <div className="field-line">
                 <TextField
@@ -111,7 +112,8 @@ class SignIn extends React.Component {
                         errorText={errors.password}
                     />
                 </div>
-                    <RaisedButton label="Sign In" secondary={true} onClick={this.authenticate} className="login-button"/>
+                    <RaisedButton type="submit" label="Sign In" secondary={true} className="login-button"/>
+                </form>
                 <Snackbar
                     open={this.state.snack.visible}
                     message={this.state.snack.message}

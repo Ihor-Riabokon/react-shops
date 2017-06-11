@@ -42,7 +42,9 @@ class SignUp extends React.Component {
     }
 
 
-    register() {
+    register(event) {
+
+        event.preventDefault();
 
         ValidateSignUp(this.state.user)
             .then(
@@ -50,7 +52,7 @@ class SignUp extends React.Component {
                     const errors = response.errors ? response.errors : {};
                     if(response.message){
                         errors.summary = response.message;
-                        this.setState({snack: { visible: false, message: errors.summary}});
+                        this.setState({snack: { visible: true, message: errors.summary}});
                     }
 
                     this.setState({
@@ -95,6 +97,7 @@ class SignUp extends React.Component {
 
         return (
             <Card className="container">
+                <form action="/" onSubmit={this.register}>
                 <h2 className="card-heading">Sign Up</h2>
                     <div className="field-line">
                     <TextField
@@ -122,7 +125,8 @@ class SignUp extends React.Component {
                         errorText={errors.confirmPassword}
                     />
                     </div>
-                    <RaisedButton label="Registration" secondary={true} onClick={this.register} className="signup-button" />
+                    <RaisedButton type="submit" label="Register" secondary={true} className="signup-button" />
+                </form>
                     <CardText>Already registered? <Link to={'/signin'} className="signin-link">Sign in</Link></CardText>
                 <Snackbar
                     open={this.state.snack.visible}
