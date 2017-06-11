@@ -29,9 +29,9 @@ class ShopApp extends React.Component {
                                 <SignIn/>
                             )
                         )}/>
-                        <Route path="/logout" render={() => {
+                        <Route path="/signout" render={() => {
                             Auth.deAuthenticateUser();
-                            return <Redirect to='/signin'/>;
+                            return <Redirect to='/'/>;
                         }}/>
                     </div>
                 </BrowserRouter>

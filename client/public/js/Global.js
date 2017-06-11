@@ -1,23 +1,70 @@
 import isEmail from 'validator/lib/isEmail';
+const ValidateSignUp = (payload) =>  {
 
-const validate = function (fieldname) {
-    if(this.state[fieldname] && this.state[fieldname].length) {
-        switch (fieldname) {
-            case 'email':
-                if(!isEmail(this.state.email)) return 'Non valid email';
-                break;
-            case 'password':
-                if(this.state.password.length < 6) return 'Minimal password length is 6';
-                break;
-            case 'confirmPassword':
-                if(this.state.password.length < 6 || this.state.confirmPassword !== this.state.password) return 'Passwords do not match';
-                break;
+    return new Promise(function(resolve) {
+        const errors = {};
+        let isFormValid = true;
+        let message = '';
+
+        if (!payload || typeof payload.email !== 'string' || !isEmail(payload.email)) {
+            isFormValid = false;
+            errors.email = 'Please provide a correct email address.';
         }
-    }else{
-        return false;
-    }
+
+        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
+            isFormValid = false;
+            errors.password = 'Password must have at least 8 characters.';
+        }
+
+        if(!payload || typeof payload.confirmPassword !== 'string' || payload.confirmPassword !== payload.password){
+            isFormValid = false;
+            errors.confirmPassword = 'Password does not match';
+        }
+
+        if (!isFormValid) {
+            message = 'Check the form for errors.';
+        }
+
+        resolve({
+            success: isFormValid,
+            message,
+            errors
+        })
+    });
+
+};
+
+const ValidateSignIn = (payload) =>  {
+
+    return new Promise(function(resolve) {
+        const errors = {};
+        let isFormValid = true;
+        let message = '';
+
+        if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+            isFormValid = false;
+            errors.email = 'Please provide your email address.';
+        }
+
+        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+            isFormValid = false;
+            errors.password = 'Please provide your password.';
+        }
+
+        if (!isFormValid) {
+            message = 'Check the form for errors.';
+        }
+
+        resolve({
+            success: isFormValid,
+            message,
+            errors
+        })
+    });
+
 };
 
 export {
-    validate
+    ValidateSignUp,
+    ValidateSignIn
 }

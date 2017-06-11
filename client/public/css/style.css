@@ -1,3 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a:not(.pagination a) {
+    color: #FF4081;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.4s;
+}
+
+a:not(.pagination a):hover {
+    color: #3f51b5;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+    width: 750px;
+}
+
 .pagination {
     padding-left: 15px;
     padding-right: 15px;
@@ -6,10 +29,13 @@
     height: 50px;
 }
 
+.logout-link{
+    text-decoration: none;
+    color: white;
+    line-height: 44px;
+}
+
 .pagination li {
-    width: 15px;
-    height: 15px;
-    padding: 5px;
     border: 1px solid gray;
     display: block;
     text-align: center;
@@ -21,7 +47,10 @@
 
 .pagination a{
     outline: none !important;
-
+    width: 20px;
+    padding: 5px;
+    height: 20px;
+    display: block;
 }
 
 .pagination .active {
@@ -29,7 +58,7 @@
     color:white;
 }
 
-.login-button{
+.login-button, .signup-button{
     margin-bottom: 15px;
 }
 
@@ -38,21 +67,6 @@
     cursor: default;
 }
 
-.container {
-    margin: 0 auto;
-    text-align: center;
-    width: 700px;
-}
 .field-line, .button-line {
     padding: 16px;
-}
-
-.error-message {
-    padding: 0 16px;
-    color: tomato;
-}
-
-.success-message {
-    padding: 0 16px;
-    color: green;
 }

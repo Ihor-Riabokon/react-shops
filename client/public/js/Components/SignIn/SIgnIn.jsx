@@ -1,66 +1,96 @@
 import React from 'react'
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-import {validate} from '../../Global';
+import {ValidateSignIn} from '../../Global';
 import {withRouter} from "react-router-dom";
 
 class SignIn extends React.Component {
+
     constructor(props) {
         super(props);
 
-        this.authHandler = this.auth.bind(this);
-        this.inputChangeHandler = this.inputChange.bind(this);
-        this.validate = validate.bind(this);
+        this.authenticate = this.authenticate.bind(this);
+        this.changeUser = this.changeUser.bind(this);
 
-        this.state = {};
-    }
-
-
-    auth() {
-        let check = true;
-        ['email', 'password'].forEach(name => {
-            if (this.validate(name) === false || typeof this.validate(name) == 'string') {
-                check = false;
+        this.state = {
+            errors: {},
+            user: {
+                email: '',
+                password: ''
+            },
+            snack: {
+                visible: false,
+                message: ''
             }
-        });
-
-        if (!check) return this.setState({snack: 'Required fields are empty'});
-
-        let users = localStorage.getItem('users');
-
-        try {
-            users = JSON.parse(users) || {};
-        } catch (e) {
-            console.log(e);
-        }
-
-        if (!users[this.state.email]) {
-            return this.setState({snack: 'This user does not exist'});
-        }
-
-        if (users[this.state.email].password !== this.state.password) {
-            return this.setState({snack: 'Password is wrong'});
-        }
-
-        localStorage.setItem('authentificated', JSON.stringify({
-            email: this.state.email
-        }));
-
-        this.props.history.push('/shops');
+        };
     }
 
-    inputChange(e) {
-        const field = e.target.name;
-        const value = e.target.value;
+
+    authenticate() {
+
+        ValidateSignIn(this.state.user)
+            .then(
+                response => {
+                    const errors = response.errors ? response.errors : {};
+                    if(response.message){
+                        errors.summary = response.message;
+                        this.setState({snack: {visible: true, message: errors.summary}});
+                    }
+
+                    this.setState({
+                        errors
+                    });
+
+
+                    if(Object.keys(errors).length === 0){
+                        let registeredUsers = localStorage.getItem('users');
+
+                        try {
+                            registeredUsers = JSON.parse(registeredUsers) || {};
+                        } catch (e) {
+                            console.log(e);
+                        }
+
+                        let {email, password} = this.state.user;
+
+                        if (!registeredUsers[email]) {
+                            return this.setState({snack: {visible: true, message: 'This user does not exist'}});
+                        }
+
+                        if (registeredUsers[email].password !== password) {
+                            return this.setState({snack: {visible: true, message: 'Password is wrong'}});
+                        }
+
+                        localStorage.setItem('authentificated', JSON.stringify({
+                            email
+                        }));
+
+                        this.props.history.push('/shops');
+                    }
+
+                }
+            );
+    }
+
+    changeUser(event){
+
+        this.setState({snack: {visible: false, message: ''}});
+
+        const field = event.target.name;
+        const user = this.state.user;
+        user[field] = event.target.value;
 
         this.setState({
-            [field]: value
+            user
         });
+
     }
 
     render() {
+        let {errors} = this.state;
+
         return (
             <Card className="container">
                 <h2 className="card-heading">Sign In</h2>
@@ -68,8 +98,8 @@ class SignIn extends React.Component {
                 <TextField
                         hintText="Email"
                         name="email"
-                        onChange={this.inputChangeHandler}
-                        errorText={this.validate('email')}
+                        onChange={this.changeUser}
+                        errorText={errors.email}
                     />
                 </div>
                 <div className="field-line">
@@ -77,14 +107,14 @@ class SignIn extends React.Component {
                         hintText="Password"
                         type="password"
                         name="password"
-                        onChange={this.inputChangeHandler}
-                        errorText={this.validate('password')}
+                        onChange={this.changeUser}
+                        errorText={errors.password}
                     />
                 </div>
-                    <RaisedButton label="Login" secondary={true} onClick={this.authHandler} className="login-button"/>
+                    <RaisedButton label="Sign Up" secondary={true} onClick={this.authenticate} className="login-button"/>
                 <Snackbar
-                    open={!!(this.state.snack && this.state.snack.length)}
-                    message={this.state.snack || ''}
+                    open={this.state.snack.visible}
+                    message={this.state.snack.message}
                     autoHideDuration={4000}
                 />
             </Card>

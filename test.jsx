@@ -1,10 +1,10 @@
 import React from 'react'
-import {Card, CardText} from 'material-ui/Card';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import {ValidateSignUp} from '../../Global.js';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -19,17 +19,11 @@ class SignUp extends React.Component {
                 email: '',
                 password: '',
                 confirmPassword: ''
-            },
-            snack: {
-                visible: false,
-                message: ''
             }
         };
     }
 
     changeUser(event){
-
-        this.setState({snack: false});
 
         const field = event.target.name;
         const user = this.state.user;
@@ -50,7 +44,6 @@ class SignUp extends React.Component {
                     const errors = response.errors ? response.errors : {};
                     if(response.message){
                         errors.summary = response.message;
-                        this.setState({snack: { visible: false, message: errors.summary}});
                     }
 
                     this.setState({
@@ -66,24 +59,24 @@ class SignUp extends React.Component {
                             console.log(e);
                         }
 
-                        let {email, password} = this.state.user;
-
-                        if(registeredUsers[email]) {
-                            this.setState({snack: {visible: true, message: 'This user already exists'}});
+                        if(registeredUsers[this.state.user.email]) {
+                            this.setState({snack: 'This user already exists'});
                         } else {
-                            this.setState({snack: false});
-                            registeredUsers[email] = {
-                                password: password
+                            registeredUsers[this.state.email] = {
+                                password: this.state.user.password
                             };
 
                             localStorage.setItem('users', JSON.stringify(registeredUsers));
                             localStorage.setItem('authentificated', JSON.stringify({
-                                email
+                                email: this.state.user.email
                             }));
 
                             this.props.history.push('/shops');
                         }
                     }
+
+
+
 
                 }
             );
@@ -94,39 +87,35 @@ class SignUp extends React.Component {
         let {errors} = this.state;
 
         return (
-            <Card className="container">
-                <h2 className="card-heading">Sign Up</h2>
-                    <div className="field-line">
+            <Card>
+                <CardHeader>Registration</CardHeader>
+                <CardText>
+                    {errors.summary && <p className="error-message">{errors.summary}</p>}
                     <TextField
                         hintText="Email"
                         name="email"
                         onChange={this.changeUser}
                         errorText={errors.email}
-                    />
-                    </div>
-                    <div className="field-line">
+                    /><br />
                     <TextField
                         hintText="Password"
                         type="password"
                         name="password"
                         onChange={this.changeUser}
                         errorText={errors.password}
-                    />
-                    </div>
-                    <div className="field-line">
+                    /><br />
                     <TextField
                         hintText="Confirm password"
                         name="confirmPassword"
                         type="password"
                         onChange={this.changeUser}
                         errorText={errors.confirmPassword}
-                    />
-                    </div>
-                    <RaisedButton label="Registration" secondary={true} onClick={this.register} className="signup-button" />
-                    <CardText>Already registered? <Link to={'/signin'}>Sign in</Link></CardText>
+                    /><br />
+                    <RaisedButton label="Registration" secondary={true} onClick={this.register} />
+                </CardText>
                 <Snackbar
-                    open={this.state.snack.visible}
-                    message={this.state.snack.message}
+                    open={!!(this.state.snack && this.state.snack.length)}
+                    message={this.state.snack || ''}
                     autoHideDuration={4000}
                 />
             </Card>

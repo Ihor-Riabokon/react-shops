@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios'
 import ReactPaginate from 'react-paginate';
 import {
@@ -9,8 +9,8 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import {withRouter, Link} from "react-router-dom";
-
+import {withRouter} from 'react-router-dom';
+import Navbar from '../Navbar/Navbar.jsx';
 
 class Shops extends React.Component {
 
@@ -43,7 +43,7 @@ class Shops extends React.Component {
         return (
             (this.state.data.length ?
                 <div>
-                    <Link to="/logout"> Log Out </Link>
+                    <Navbar/>
                     <Table>
                         <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                             <TableRow>
