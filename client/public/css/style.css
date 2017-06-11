@@ -1,0 +1,58 @@
+.pagination {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 600px;
+    margin: 20px auto;
+    height: 50px;
+}
+
+.pagination li {
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+    border: 1px solid gray;
+    display: block;
+    text-align: center;
+    float: left;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination a{
+    outline: none !important;
+
+}
+
+.pagination .active {
+    background-color: #3f51b5;
+    color:white;
+}
+
+.login-button{
+    margin-bottom: 15px;
+}
+
+.pagination .break {
+    border: none;
+    cursor: default;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+    width: 700px;
+}
+.field-line, .button-line {
+    padding: 16px;
+}
+
+.error-message {
+    padding: 0 16px;
+    color: tomato;
+}
+
+.success-message {
+    padding: 0 16px;
+    color: green;
+}
