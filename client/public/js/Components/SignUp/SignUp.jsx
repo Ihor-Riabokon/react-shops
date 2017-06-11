@@ -123,7 +123,7 @@ class SignUp extends React.Component {
                     />
                     </div>
                     <RaisedButton label="Registration" secondary={true} onClick={this.register} className="signup-button" />
-                    <CardText>Already registered? <Link to={'/signin'}>Sign in</Link></CardText>
+                    <CardText>Already registered? <Link to={'/signin'} className="signin-link">Sign in</Link></CardText>
                 <Snackbar
                     open={this.state.snack.visible}
                     message={this.state.snack.message}

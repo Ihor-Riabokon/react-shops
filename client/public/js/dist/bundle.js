@@ -16489,7 +16489,7 @@ var ShopApp = function (_React$Component) {
                             } }),
                         _react2.default.createElement(_reactRouterDom.Route, { path: '/signout', render: function render() {
                                 _Auth2.default.deAuthenticateUser();
-                                return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+                                return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/signin' });
                             } })
                     )
                 )

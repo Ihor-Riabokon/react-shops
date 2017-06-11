@@ -111,7 +111,7 @@ class SignIn extends React.Component {
                         errorText={errors.password}
                     />
                 </div>
-                    <RaisedButton label="Sign Up" secondary={true} onClick={this.authenticate} className="login-button"/>
+                    <RaisedButton label="Sign In" secondary={true} onClick={this.authenticate} className="login-button"/>
                 <Snackbar
                     open={this.state.snack.visible}
                     message={this.state.snack.message}

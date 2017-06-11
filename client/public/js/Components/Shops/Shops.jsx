@@ -55,7 +55,7 @@ class Shops extends React.Component {
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
                             {this.state.data.map((row, i) =>
-                                <TableRow key={i}>
+                                <TableRow key={i} >
                                     <TableRowColumn>{row.title}</TableRowColumn>
                                     <TableRowColumn><img src={row.cover} /></TableRowColumn>
                                     <TableRowColumn>{row.link}</TableRowColumn>
