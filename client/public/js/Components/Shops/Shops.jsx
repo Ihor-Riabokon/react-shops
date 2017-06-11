@@ -12,6 +12,11 @@ import {
 import {withRouter} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar.jsx';
 
+const tableCellStyles = {
+    overflowX: 'auto',
+    whiteSpace: 'normal'
+};
+
 class Shops extends React.Component {
 
     constructor(props) {
@@ -56,10 +61,10 @@ class Shops extends React.Component {
                         <TableBody displayRowCheckbox={false}>
                             {this.state.data.map((row, i) =>
                                 <TableRow key={i} >
-                                    <TableRowColumn>{row.title}</TableRowColumn>
-                                    <TableRowColumn><img src={row.cover} /></TableRowColumn>
-                                    <TableRowColumn>{row.link}</TableRowColumn>
-                                    <TableRowColumn>{row.description}</TableRowColumn>
+                                    <TableRowColumn style={tableCellStyles}>{row.title}</TableRowColumn>
+                                    <TableRowColumn style={tableCellStyles}><img src={row.cover} /></TableRowColumn>
+                                    <TableRowColumn style={tableCellStyles}>{row.link}</TableRowColumn>
+                                    <TableRowColumn style={tableCellStyles}>{row.description}</TableRowColumn>
                                 </TableRow>
                             )}
                         </TableBody>
