@@ -1,4 +1,5 @@
 import isEmail from 'validator/lib/isEmail';
+
 const ValidateSignUp = (payload) =>  {
 
     return new Promise(function(resolve) {
