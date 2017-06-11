@@ -1,10 +1,10 @@
 import React from 'react'
-import {Card} from 'material-ui/Card';
+import {Card, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import {ValidateSignIn} from '../../Global';
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from 'react-router-dom';
 
 class SignIn extends React.Component {
 
@@ -114,6 +114,7 @@ class SignIn extends React.Component {
                 </div>
                     <RaisedButton type="submit" label="Sign In" secondary={true} className="login-button"/>
                 </form>
+                <CardText><Link to={'/'} className="main-page-link">Back to main</Link></CardText>
                 <Snackbar
                     open={this.state.snack.visible}
                     message={this.state.snack.message}

@@ -10459,9 +10459,9 @@ var ValidateSignUp = function ValidateSignUp(payload) {
             errors.email = 'Please provide a correct email address.';
         }
 
-        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 5) {
+        if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 6) {
             isFormValid = false;
-            errors.password = 'Password must have at least 5 characters.';
+            errors.password = 'Password must have at least 6 characters.';
         }
 
         if (!payload || typeof payload.confirmPassword !== 'string' || payload.confirmPassword !== payload.password) {
@@ -17733,6 +17733,15 @@ var SignIn = function (_React$Component) {
                         })
                     ),
                     _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Sign In', secondary: true, className: 'login-button' })
+                ),
+                _react2.default.createElement(
+                    _Card.CardText,
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/', className: 'main-page-link' },
+                        'Back to main'
+                    )
                 ),
                 _react2.default.createElement(_Snackbar2.default, {
                     open: this.state.snack.visible,
